@@ -9,3 +9,9 @@
 --      ('Learn to code', false),
 --      ('Build projects', false),
 --      ('Get a job', false);
+
+insert into "public"."Users"
+  ("username", "password")
+  values
+    ('timlee712','1234'),
+    ('example', 'password');
