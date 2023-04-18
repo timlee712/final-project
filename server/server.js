@@ -54,6 +54,12 @@ app.post('/api/login', async (req, res, next) => {
   }
 });
 
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).json({ message: 'Internal Server Error' });
+});
+
 app.get('/api/hello', (req, res) => {
   res.json({ message: 'Hello World!' });
 });

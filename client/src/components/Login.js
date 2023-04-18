@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import '../loginAndSignup.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { BiFilm } from 'react-icons/bi';
 
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       if (username === 'demo' && password === 'demo') {
-        window.location.href = '/';
+        navigate('/');
       } else {
         setMessage('Incorrect username or password');
       }
@@ -24,7 +26,9 @@ export default function Login() {
     <div className="container d-flex flex-column">
       <div className="row">
         <div className="col-lg-6 mx-auto">
-          <h1 className="text-center mb-5 text-white"><i className="fa-solid fa-film mx-1"></i>WatchIt</h1>
+          <h1 className="text-center mb-5 text-white">
+            <BiFilm className="mx-1 mb-1 stretch" />WatchIt
+          </h1>
           <form className="d-flex justify-content-center mx-auto flex-column" onSubmit={handleSubmit}>
             <div className="form-group text-white">
               <label>Username:</label>

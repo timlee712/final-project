@@ -16,3 +16,7 @@ h1 {
 form {
   width: 90%;
 }
+
+.stretch {
+  transform: scaleX(1.1);
+}
