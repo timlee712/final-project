@@ -1,6 +1,5 @@
 * {
   font-family: 'Roboto', sans-serif;
-  background-color: #7F99E1;
 }
 
 link {
@@ -15,6 +14,14 @@ h1 {
 
 form {
   width: 90%;
+}
+
+.user {
+  height: 100vh;
+}
+
+.skyblue {
+    background-color: #7F99E1;
 }
 
 .stretch {

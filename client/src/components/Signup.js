@@ -40,7 +40,7 @@ export default function Signup() {
         setMessage(data.error);
       } else {
         setMessage('Account created successfully');
-        navigate('/');
+        navigate('/login');
       }
     } catch (error) {
       setMessage('An error occurred while creating your account');
@@ -48,7 +48,7 @@ export default function Signup() {
   };
 
   return (
-    <div className="container d-flex flex-column">
+    <div className="container d-flex flex-column user skyblue">
       <div className="row">
         <div className="col-lg-6 mx-auto">
           <h1 className="text-center mb-5 text-white">
@@ -79,13 +79,13 @@ export default function Signup() {
                      onChange={(e) => setConfirmPassword(e.target.value)}
                      required />
             </div>
-            <button type="submit" className="text-white border border-white rounded w-25 mx-auto mt-3 p-1">
+            <button type="submit" className="text-white border border-white rounded w-25 mx-auto mt-3 p-1 skyblue">
               Sign Up
             </button>
           </form>
           {message && <p className="mt-5 text-center text-white">{message}</p>}
           <p className="mt-5 text-center text-white">
-            Already have an account? <Link to="/" className="text-white"><u>SIGN IN</u></Link>
+            Already have an account? <Link to="/login" className="text-white"><u>SIGN IN</u></Link>
           </p>
         </div>
       </div>
