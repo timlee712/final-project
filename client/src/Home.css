@@ -42,6 +42,55 @@
   color: white;
 }
 
+.carousel {
+  background-color: #111;
+}
+
+ .carousel-indicators {
+   margin: 0.8rem;
+ }
+
+ .carousel-indicators button {
+   border: 1px solid transparent;
+   border-radius: 50%;
+   background-color: #eee;
+   margin: 0 0.4rem;
+   height: 15px;
+   width: 15px;
+ }
+
+ .carousel-indicators .active {
+   border: 1px solid transparent;
+   border-radius: 50%;
+   background-color: #7f99e1;
+   height: 15px;
+   width: 15px;
+ }
+
+ h3 {
+  font-size: 1rem;
+  font-weight: 500;
+ }
+
+ .carousel-caption {
+    position: absolute;
+    top: 55%;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+    padding: 1rem;
+    text-align: center;
+ }
+
+ .carousel-item img {
+    object-fit: cover;
+    height: 200px;
+    max-height: 200px;
+    object-position: 0 10%;
+    opacity: 0.6;
+ }
+
 
 @media only screen and (min-width: 784px) {
   .film-icon {
@@ -70,4 +119,36 @@
   .search-bar {
     width: 400px;
   }
+
+  h3 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .carousel-indicators {
+    margin: 1.5rem;
+  }
+
+ .carousel-indicators button {
+  margin: 0 0.5rem;
+  height: 20px;
+  width: 20px;
+ }
+
+ .carousel-indicators .active {
+   height: 20px;
+   width: 20px;
+ }
+
+ .carousel-caption {
+    position: absolute;
+    top: 75%;
+    left: 2rem;
+ }
+
+ .carousel-item img {
+   object-fit: cover;
+   height: 500px;
+   max-height: 500px;
+ }
 }

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { BiFilm } from 'react-icons/bi';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { IoPersonCircle } from 'react-icons/io5';
-import { FaSearch } from 'react-icons/fa';
 import { Navbar, Nav, Form, FormControl, Carousel, Container, Row, Col, Card } from 'react-bootstrap';
 import '../Home.css';
 import { Link } from 'react-router-dom';
@@ -83,34 +82,76 @@ export default function Home() {
           <IoPersonCircle className="person-icon text-white ml-1 mb-1" />
         </Nav>
       </Navbar>
-      <Carousel activeIndex={index} onSelect={handleSelect} className="carousel-container" controls={false} indicators={false} >
+      <Carousel activeIndex={index} onSelect={handleSelect} className="carousel-container" controls={false} indicators={true} >
         <Carousel.Item>
-          <img
-            className="d-block w-100"
-            src="https://via.placeholder.com/720x300"
-            alt="First slide"
-          />
+          {movies.slice(0, 1).map((movie) => (
+            <img
+              className="d-block w-100"
+              src={movie.image}
+              alt={movie.title}
+            />
+          ))}
+          <Carousel.Caption>
+            {movies.slice(0, 1).map((movie) => (
+              <h3 className="d-flex ">{movie.fullTitle}</h3>
+            ))}
+          </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
-          <img
-            className="d-block w-100"
-            src="https://via.placeholder.com/720x300"
-            alt="Second slide"
-          />
+          {movies.slice(1, 2).map((movie) => (
+            <img
+              className="d-block w-100"
+              src={movie.image}
+              alt={movie.title}
+            />
+          ))}
+          <Carousel.Caption>
+            {movies.slice(1, 2).map((movie) => (
+              <h3 className="d-flex ">{movie.fullTitle}</h3>
+            ))}
+          </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
-          <img
-            className="d-block w-100"
-            src="https://via.placeholder.com/720x300"
-            alt="Third slide"
-          />
+          {movies.slice(2, 3).map((movie) => (
+            <img
+              className="d-block w-100"
+              src={movie.image}
+              alt={movie.title}
+            />
+          ))}
+          <Carousel.Caption>
+            {movies.slice(2, 3).map((movie) => (
+              <h3 className="d-flex ">{movie.fullTitle}</h3>
+            ))}
+          </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
-          <img
-            className="d-block w-100"
-            src="https://via.placeholder.com/720x300"
-            alt="Fourth slide"
-          />
+          {movies.slice(3, 4).map((movie) => (
+            <img
+              className="d-block w-100"
+              src={movie.image}
+              alt={movie.title}
+            />
+          ))}
+          <Carousel.Caption>
+            {movies.slice(3, 4).map((movie) => (
+              <h3 className="d-flex ">{movie.fullTitle}</h3>
+            ))}
+          </Carousel.Caption>
+        </Carousel.Item>
+        <Carousel.Item>
+          {movies.slice(4, 5).map((movie) => (
+            <img
+              className="d-block w-100"
+              src={movie.image}
+              alt={movie.title}
+            />
+          ))}
+          <Carousel.Caption>
+            {movies.slice(4, 5).map((movie) => (
+              <h3 className="d-flex ">{movie.fullTitle}</h3>
+            ))}
+          </Carousel.Caption>
         </Carousel.Item>
       </Carousel>
 
