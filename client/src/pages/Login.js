@@ -23,7 +23,7 @@ export default function Login() {
   };
 
   return (
-    <div className="container d-flex flex-column">
+    <div className="container d-flex flex-column user skyblue">
       <div className="row">
         <div className="col-lg-6 mx-auto">
           <h1 className="text-center mb-5 text-white">
@@ -38,7 +38,7 @@ export default function Login() {
               <label>Password:</label>
               <input placeholder="demo" required type="password" className="form-control" value={password} onChange={(e) => setPassword(e.target.value)} />
             </div>
-            <button type="submit" className="text-white border border-white rounded w-25 mx-auto mt-3 p-1">Sign In</button>
+            <button type="submit" className="text-white border border-white rounded w-25 mx-auto mt-3 p-1 skyblue">Sign In</button>
             {message && <p className="text-center text-danger mt-3">{message}</p>}
           </form>
           <p className="mt-5 text-center text-white">Don't have an account? <Link to="/signup" className="text-white link"><u>SIGN UP</u></Link></p>
