@@ -30,7 +30,7 @@ export default function NavBar() {
         </Link>
       </Navbar.Brand>
       <Nav className="mr-auto">
-        <Link to="/login" className="nav-link text-white d-none d-lg-block">Watchlist</Link>
+        <Link to="/watchlist" className="nav-link text-white d-none d-lg-block">Watchlist</Link>
       </Nav>
       <Nav className="ml-auto d-flex flex-row">
         <Form inline className="mr-lg-2 d-flex d-lg-none" onSubmit={handleSubmit}>
@@ -47,7 +47,7 @@ export default function NavBar() {
       </Nav>
       <Navbar.Collapse id="navbarNav">
         <Nav className="ml-auto d-lg-none">
-          <Link to="/login" className="nav-link text-white">Watchlist</Link>
+          <Link to="/watchlist" className="nav-link text-white">Watchlist</Link>
         </Nav>
       </Navbar.Collapse>
       <Nav className="d-none d-lg-flex">

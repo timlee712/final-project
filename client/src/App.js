@@ -5,6 +5,7 @@ import Signup from './pages/Signup';
 import Home from './pages/Home';
 import SearchResults from './pages/SearchResults';
 import MovieDescription from './pages/MovieDescription';
+import Watchlist from './pages/Watchlist';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="search/:query" element={<SearchResults />} />
           <Route path="movie/:id" element={<MovieDescription />} />
+          <Route path="watchlist" element={<Watchlist />} />
 
       </Routes>
     </div>
