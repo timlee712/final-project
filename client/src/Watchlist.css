@@ -1,0 +1,20 @@
+.bg {
+  background-color: #111;
+  height: 100vh;
+}
+
+.add-icon {
+  color: white;
+  font-size: 2rem;
+}
+
+.watchlist-button {
+  background-color: #7f99e1;
+}
+
+@media only screen and (min-width: 784px) {
+
+  .add-icon {
+    font-size: 3rem;
+  }
+}

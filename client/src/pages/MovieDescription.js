@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import '../SearchResults.css';
 import { useParams } from 'react-router-dom';
 import NavBar from '../components/NavBar';
@@ -20,6 +20,10 @@ export default function MovieDescription() {
     };
     fetchMovie();
   }, [id]);
+
+  const handleCreateWatchlist = async () => {
+
+  };
 
   if (!movie) {
     return <div>Loading...</div>;
@@ -50,6 +54,7 @@ export default function MovieDescription() {
                   <p><strong>Director:</strong> {movie.directors}</p>
                   <p><strong>Cast:</strong> {movie.stars}</p>
                 </div>
+                <Button className="watchlist-button" onClick={handleCreateWatchlist}>Add to Watchlist</Button>
               </Col>
             </Row>
           </Container>
