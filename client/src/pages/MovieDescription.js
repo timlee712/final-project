@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import NavBar from '../components/NavBar';
 import { FaStar } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import Loading from '../components/Loading';
 
 export default function MovieDescription() {
   const { id } = useParams();
@@ -25,11 +26,22 @@ export default function MovieDescription() {
 
   const addToWatchlist = async (event) => {
     event.preventDefault();
-    navigate('/watchlist')
+    console.log('clicked');
+    const response = await fetch(`/api/watchlist/${id}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ movie }),
+    });
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    const data = await response.json();
+    console.log(data);
+    navigate('/watchlist');
   };
 
   if (!movie) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return (

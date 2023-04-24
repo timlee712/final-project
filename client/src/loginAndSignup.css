@@ -16,8 +16,17 @@ form {
   width: 90%;
 }
 
+button:hover {
+  background-color: #94a8e1;
+  transition: 0.3s;
+}
+
 .user {
   height: 100vh;
+}
+
+.title {
+    margin: 35% 0;
 }
 
 .skyblue {
