@@ -8,6 +8,11 @@
   font-size: 2rem;
 }
 
+.add-icon:hover {
+  color: #7f99e1;
+  transition: 0.3s;
+}
+
 .watchlist-button {
   background-color: #7f99e1;
 }

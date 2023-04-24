@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import '../Watchlist.css';
 import { Link } from 'react-router-dom';
 import NavBar from '../components/NavBar';
@@ -28,18 +28,7 @@ export default function Watchlist() {
           <Row>
             <Col>
               <h2 className="header my-4">Watchlist</h2>
-              {/* {watchlist.length === 0 && <p>No movies in watchlist</p>}
-              {watchlist.map(movie => (
-                <Card key={movie.id} className="movie-card my-3">
-                  <Link to={`/movies/${movie.id}`}>
-                    <Card.Img variant="top" src={movie.image} />
-                    <Card.Body>
-                      <Card.Title>{movie.title}</Card.Title>
-                      <Card.Text>{movie.plot}</Card.Text>
-                    </Card.Body>
-                  </Link>
-                </Card>
-              ))} */}
+              {watchlist.length === 0 && <p>No movies in watchlist</p>}
             </Col>
             <Col className="d-flex justify-content-end">
               <Link to={`/create-watchlist`}>

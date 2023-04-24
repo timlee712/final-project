@@ -4,10 +4,12 @@ import '../SearchResults.css';
 import { useParams } from 'react-router-dom';
 import NavBar from '../components/NavBar';
 import { FaStar } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 export default function MovieDescription() {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchMovie = async () => {
@@ -21,8 +23,9 @@ export default function MovieDescription() {
     fetchMovie();
   }, [id]);
 
-  const handleCreateWatchlist = async () => {
-
+  const addToWatchlist = async (event) => {
+    event.preventDefault();
+    navigate('/watchlist')
   };
 
   if (!movie) {
@@ -54,7 +57,11 @@ export default function MovieDescription() {
                   <p><strong>Director:</strong> {movie.directors}</p>
                   <p><strong>Cast:</strong> {movie.stars}</p>
                 </div>
-                <Button className="watchlist-button" onClick={handleCreateWatchlist}>Add to Watchlist</Button>
+                <Button
+                  className="watchlist-button"
+                  onClick={addToWatchlist}>
+                    Add to Watchlist
+                </Button>
               </Col>
             </Row>
           </Container>
