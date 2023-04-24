@@ -49,21 +49,23 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
-// app.post('/api/watchlist/:id', async (req, res) => {
-//   const { id } = req.params;
-//   try {
-//     // Fetch the movie details from the API
-//     const response = await fetch(`https://imdb-api.com/en/API/Title/k_qou5dflv/${id}`);
-//     if (!response.ok) {
-//       throw new Error('Error fetching movie details');
-//     }
-//     const data = await response.json();
-//     // Store the movie in the database
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ message: 'Internal Server Error' });
-//   }
-// });
+app.post('/api/watchlists', async (req, res) => {
+  const { name, userId } = req.body;
+  const client = await db.connect();
+  try {
+    // insert the new watchlist into the database
+    const result = await client.query(
+      'INSERT INTO "Watchlists" ("userId", "name") VALUES ($1, $2) RETURNING *',
+      [userId, name]
+    );
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('An error occurred while creating the watchlist');
+  } finally {
+    client.release();
+  }
+});
 
 // Error handling middleware
 app.use((err, req, res, next) => {

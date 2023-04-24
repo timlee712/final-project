@@ -7,33 +7,36 @@ export default function WatchlistForm({ watchlist, setWatchlist }) {
   const [name, setName] = useState('');
   const navigate = useNavigate();
 
-
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    const payload = {
+      name,
+      userId: '<userId>', // replace with actual user ID
+    };
+
     try {
-      // Add watchlist to the database table
       const response = await fetch('/api/watchlist', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
       });
-      if (!response.ok) {
-        throw new Error(response.statusText);
+
+      if (response.ok) {
+        // Watchlist created successfully
+        const data = await response.json();
+        setWatchlist(data);
+        navigate(`/watchlists/${data.watchlistId}`);
+      } else {
+        throw new Error('Failed to create watchlist');
       }
-      const data = await response.json();
-      // Add watchlist to state
-      setWatchlist([...watchlist, data]);
-      // Clear form
-      setName('');
-      // redirect to watchlist page
-      navigate('/watchlist');
     } catch (error) {
-      // Handle errors
       console.error(error);
+      // Handle error
     }
   };
-
-
 
   return (
     <>
