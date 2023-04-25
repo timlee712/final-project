@@ -77,6 +77,31 @@ app.get('/api/watchlists/:userId', async (req, res, next) => {
   }
 });
 
+// add a movie to a database
+app.post('/api/watchlists/:watchlistId/', async (req, res, next) => {
+  const { watchlistId } = req.params;
+  const { movie } = req.body;
+  try {
+    const query = 'INSERT INTO "WatchlistItems" ("watchlistId", "movieId") VALUES ($1, $2) RETURNING *';
+    const result = await db.query(query, [watchlistId, movie.id]);
+    res.json(result.rows[0]);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// get all movies for a watchlist
+app.get('/api/watchlists/:watchlistId/movies', async (req, res, next) => {
+  const { watchlistId } = req.params;
+  try {
+    const query = 'SELECT * FROM "WatchlistItems" WHERE "watchlistId" = $1';
+    const result = await db.query(query, [watchlistId]);
+    res.json(result.rows);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err);

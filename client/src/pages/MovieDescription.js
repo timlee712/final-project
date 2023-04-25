@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { Container, Row, Col, Card, Modal, Button, Form } from 'react-bootstrap';
 import '../SearchResults.css';
 import { useParams } from 'react-router-dom';
 import NavBar from '../components/NavBar';
 import { FaStar } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import Loading from '../components/Loading';
+import { getUserId } from '../components/users';
+
 
 export default function MovieDescription() {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [watchlists, setWatchlists] = useState(null);
+  const [selectedWatchlistId, setSelectedWatchlistId] = useState(null);
+  const userId = getUserId();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,20 +30,49 @@ export default function MovieDescription() {
     fetchMovie();
   }, [id]);
 
-  const addToWatchlist = async (event) => {
-    event.preventDefault();
-    console.log('clicked');
-    const response = await fetch(`/api/watchlist/${id}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ movie }),
-    });
-    if (!response.ok) {
-      throw new Error(response.statusText);
+  useEffect(() => {
+    const fetchWatchlists = async () => {
+      const response = await fetch(`/api/watchlists/${userId}`);
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      const data = await response.json();
+      setWatchlists(data);
+    };
+    if (userId) {
+      fetchWatchlists();
     }
-    const data = await response.json();
-    console.log(data);
-    navigate('/watchlist');
+  }, [userId]);
+
+  const handleShowModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleSelect = (event, id) => {
+    setSelectedWatchlistId(id);
+
+  };
+
+  const handleAddToWatchlist = async () => {
+    console.log('selected',selectedWatchlistId);
+    if (selectedWatchlistId !== null) {
+      const response = await fetch(`/api/watchlists/${selectedWatchlistId}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ movie }),
+      });
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      const data = await response.json();
+      console.log(data);
+      handleCloseModal();
+      navigate('/watchlist');
+    }
   };
 
   if (!movie) {
@@ -68,17 +103,44 @@ export default function MovieDescription() {
                   <p><strong>Description:</strong> {movie.plot}</p>
                   <p><strong>Director:</strong> {movie.directors}</p>
                   <p><strong>Cast:</strong> {movie.stars}</p>
+                  <p><strong>Runtime:</strong> {movie.runtimeStr}</p>
                 </div>
-                <Button
-                  className="watchlist-button"
-                  onClick={addToWatchlist}>
-                    Add to Watchlist
-                </Button>
+                <button className="watchlist-button p-1 px-2" onClick={handleShowModal}>
+                  Add to Watchlist
+                </button>
+                <Modal show={showModal} onHide={() => setShowModal(false)}>
+                  <Modal.Header>
+                    <Modal.Title>Add to Watchlist</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    {watchlists.map((list) => (
+                      <div key={list.watchlistId}>
+                        <Form.Check
+                          type="checkbox"
+                          id={list.watchlistId}
+                          label={list.name}
+                          onChange={(event) => handleSelect(event.target, list.watchlistId)}
+
+                          required
+                        />
+                      </div>
+                    ))}
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowModal(false)}>
+                      Close
+                    </Button>
+                    <Button variant="primary" onClick={handleAddToWatchlist}>
+                      Add
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
               </Col>
             </Row>
           </Container>
         </div>
       )}
     </>
+
   );
 }

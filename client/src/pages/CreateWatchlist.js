@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { getUserId } from '../components/users';
 import minionGif from '../minion.gif';
 
-export default function WatchlistForm({ watchlist, setWatchlist }) {
+export default function WatchlistForm() {
   const [name, setName] = useState('');
   const navigate = useNavigate();
   const userId = getUserId();
@@ -29,9 +29,7 @@ export default function WatchlistForm({ watchlist, setWatchlist }) {
       if (!response.ok) {
         throw new Error('Failed to create watchlist');
       }
-      const data = await response.json();
-      setWatchlist(data);
-      navigate(`/watchlists/${data.watchlistId}`);
+      navigate(`/watchlists`);
     } catch (error) {
       console.error(error);
     }

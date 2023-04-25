@@ -93,6 +93,7 @@
 
  .movie-card:hover {
   background-color: #7f99e1;
+  transition: 0.3s;
  }
 
 
