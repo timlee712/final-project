@@ -1,22 +1,24 @@
 import React, { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Container, Row, Col, Form } from 'react-bootstrap';
 import NavBar from '../components/NavBar';
 import { useNavigate } from 'react-router-dom';
+import { getUserId } from '../components/users';
+import minionGif from '../minion.gif';
 
 export default function WatchlistForm({ watchlist, setWatchlist }) {
   const [name, setName] = useState('');
   const navigate = useNavigate();
+  const userId = getUserId();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     const payload = {
       name,
-      userId: '<userId>', // replace with actual user ID
+      userId, // replace with actual user ID
     };
-
     try {
-      const response = await fetch('/api/watchlist', {
+      const response = await fetch('/api/watchlists', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -24,38 +26,55 @@ export default function WatchlistForm({ watchlist, setWatchlist }) {
         body: JSON.stringify(payload),
       });
 
-      if (response.ok) {
-        // Watchlist created successfully
-        const data = await response.json();
-        setWatchlist(data);
-        navigate(`/watchlists/${data.watchlistId}`);
-      } else {
+      if (!response.ok) {
         throw new Error('Failed to create watchlist');
       }
+      const data = await response.json();
+      setWatchlist(data);
+      navigate(`/watchlists/${data.watchlistId}`);
     } catch (error) {
       console.error(error);
-      // Handle error
     }
   };
 
   return (
     <>
       <NavBar />
-      <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="name">
-          <Form.Label>Watchlist Name</Form.Label>
-          <Form.Control
-            required
-            type="text"
-            placeholder="Enter name"
-            value={name}
-            onChange={(event) => setName(event.target.value)}
-          />
-        </Form.Group>
-        <Button variant="primary" type="submit">
-          Create Watchlist
-        </Button>
-      </Form>
+      <div className="bg text-white">
+        <Container>
+          <Row>
+            <Col>
+              <h2 className="header my-4">Create Watchlist</h2>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <div className="loading-container d-flex justify-content-center my-3">
+                <img src={minionGif} alt="minions" className="loading-image" />
+              </div>
+            </Col>
+          </Row>
+          <Row className="d-flex justify-content-center">
+            <Col className="w-75">
+              <Form onSubmit={handleSubmit} >
+                <Form.Group controlId="name">
+                  <Form.Label>Watchlist Name</Form.Label>
+                  <Form.Control
+                    required
+                    type="text"
+                    placeholder="Enter name"
+                    value={name}
+                    onChange={(event) => setName(event.target.value)}
+                  />
+                </Form.Group>
+                <button type="submit" className="create-watchlist-button p-1 px-2 my-3">
+                  Create Watchlist
+                </button>
+              </Form>
+            </Col>
+          </Row>
+        </Container>
+      </div>
     </>
   );
 }

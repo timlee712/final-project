@@ -49,12 +49,12 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
+// create a new watchlist
 app.post('/api/watchlists', async (req, res) => {
   const { name, userId } = req.body;
-  const client = await db.connect();
   try {
     // insert the new watchlist into the database
-    const result = await client.query(
+    const result = await db.query(
       'INSERT INTO "Watchlists" ("userId", "name") VALUES ($1, $2) RETURNING *',
       [userId, name]
     );
@@ -62,8 +62,18 @@ app.post('/api/watchlists', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).send('An error occurred while creating the watchlist');
-  } finally {
-    client.release();
+  }
+});
+
+// get all watchlists for a user
+app.get('/api/watchlists/:userId', async (req, res, next) => {
+  const { userId } = req.params;
+  try {
+    const query = 'SELECT * FROM "Watchlists" WHERE "userId" = $1';
+    const result = await db.query(query, [userId]);
+    res.json(result.rows);
+  } catch (error) {
+    next(error);
   }
 });
 

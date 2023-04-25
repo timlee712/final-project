@@ -3,6 +3,7 @@ import '../loginAndSignup.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { BiFilm } from 'react-icons/bi';
 import { Container, Row, Col, Form } from 'react-bootstrap';
+import { setUserId } from '../components/users';
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -10,8 +11,8 @@ export default function Login() {
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     try {
       const response = await fetch('/api/login', {
         method: 'POST',
@@ -21,12 +22,13 @@ export default function Login() {
         body: JSON.stringify({ username, password })
       });
       const data = await response.json();
-      if (response.ok) {
-        // do something with the logged-in user data, such as store it in state
+      if (!response.ok) {
+        setMessage('Incorrect username or password');
+      } else {
+        // save the userId to local storage
+        setUserId(data.userId)
         console.log(data);
         navigate('/');
-      } else {
-        setMessage('Incorrect username or password');
       }
     } catch (error) {
       console.error(error);
