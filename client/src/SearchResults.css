@@ -14,6 +14,8 @@
   margin-left: 0.5rem;
 }
 
-@media only screen and (min-width: 784px) {
-
+.watchlist-button {
+  color: white;
+  border: #7f99e1 1px solid;
+  border-radius: 0.3em;
 }

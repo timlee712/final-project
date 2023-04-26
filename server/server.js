@@ -2,8 +2,6 @@ import 'dotenv/config';
 import express from 'express';
 import errorMiddleware from './lib/error-middleware.js';
 import pg from 'pg';
-import jwt from 'jsonwebtoken';
-import argon2 from 'argon2';
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -36,19 +34,69 @@ app.post('/api/users', async (req, res, next) => {
 });
 
 // login
-app.post('/api/login', async (req, res, next) => {
-  const { username, password } = req.body;
+app.post('/api/login', async (req, res) => {
   try {
-    const user = await db.query('SELECT * FROM "Users" WHERE username = $1', [username]);
-    if (!user) {
-      return res.status(401).json({ message: 'Invalid username or password' });
+    const { username, password } = req.body;
+    const result = await db.query('SELECT * FROM "Users" WHERE username = $1 AND password = $2', [username, password]);
+    if (result.rows.length === 0) {
+      res.status(401).send('Invalid username or password');
+      return;
     }
-    const passwordMatch = await argon2.verify(user.password, password);
-    if (!passwordMatch) {
-      return res.status(401).json({ message: 'Invalid username or password' });
-    }
-    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET);
-    res.json({ token });
+    res.status(200).send(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal server error');
+  }
+});
+
+// create a new watchlist
+app.post('/api/watchlists', async (req, res) => {
+  const { name, userId } = req.body;
+  try {
+    // insert the new watchlist into the database
+    const result = await db.query(
+      'INSERT INTO "Watchlists" ("userId", "name") VALUES ($1, $2) RETURNING *',
+      [userId, name]
+    );
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('An error occurred while creating the watchlist');
+  }
+});
+
+// get all watchlists for a user
+app.get('/api/watchlists/:userId', async (req, res, next) => {
+  const { userId } = req.params;
+  try {
+    const query = 'SELECT * FROM "Watchlists" WHERE "userId" = $1';
+    const result = await db.query(query, [userId]);
+    res.json(result.rows);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// add a movie to a database
+app.post('/api/watchlists/:watchlistId/', async (req, res, next) => {
+  const { watchlistId } = req.params;
+  const { movie } = req.body;
+  try {
+    const query = 'INSERT INTO "WatchlistItems" ("watchlistId", "movieId") VALUES ($1, $2) RETURNING *';
+    const result = await db.query(query, [watchlistId, movie.id]);
+    res.json(result.rows[0]);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// get all movies for a watchlist
+app.get('/api/watchlists/:watchlistId/movies', async (req, res, next) => {
+  const { watchlistId } = req.params;
+  try {
+    const query = 'SELECT * FROM "WatchlistItems" WHERE "watchlistId" = $1';
+    const result = await db.query(query, [watchlistId]);
+    res.json(result.rows);
   } catch (error) {
     next(error);
   }

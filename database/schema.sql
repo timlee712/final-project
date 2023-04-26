@@ -43,7 +43,7 @@ CREATE TABLE "public"."Movies" (
 
 
 CREATE TABLE "public"."WatchlistItems" (
-	"movieId" integer NOT NULL,
+	"movieId" TEXT NOT NULL,
 	"watchlistId" integer NOT NULL
 ) WITH (
   OIDS=FALSE
@@ -55,5 +55,4 @@ CREATE TABLE "public"."WatchlistItems" (
 ALTER TABLE "Watchlists" ADD CONSTRAINT "Watchlists_fk0" FOREIGN KEY ("userId") REFERENCES "Users"("userId");
 
 
-ALTER TABLE "WatchlistItems" ADD CONSTRAINT "WatchlistItems_fk0" FOREIGN KEY ("movieId") REFERENCES "Movies"("movieId");
 ALTER TABLE "WatchlistItems" ADD CONSTRAINT "WatchlistItems_fk1" FOREIGN KEY ("watchlistId") REFERENCES "Watchlists"("watchlistId");
