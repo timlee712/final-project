@@ -29,7 +29,7 @@ CREATE TABLE "public"."Watchlists" (
 
 
 CREATE TABLE "public"."Movies" (
-	"movieId" serial NOT NULL,
+	"movieId" TEXT NOT NULL,
 	"title" TEXT NOT NULL,
 	"releaseYear" integer NOT NULL,
 	"director" TEXT NOT NULL,
