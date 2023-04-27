@@ -29,7 +29,7 @@ export default function WatchlistForm() {
       if (!response.ok) {
         throw new Error('Failed to create watchlist');
       }
-      navigate(`/watchlists`);
+      navigate(`/watchlist`);
     } catch (error) {
       console.error(error);
     }
