@@ -78,7 +78,7 @@ app.get('/api/watchlists/:userId', async (req, res, next) => {
 });
 
 // add a movie to a database
-app.post('/api/watchlists/:watchlistId/', async (req, res, next) => {
+app.post('/api/watchlists/:watchlistId', async (req, res, next) => {
   const { watchlistId } = req.params;
   const { movie } = req.body;
   try {
