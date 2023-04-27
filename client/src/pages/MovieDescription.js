@@ -58,7 +58,6 @@ export default function MovieDescription() {
   };
 
   const handleAddToWatchlist = async () => {
-    console.log('selected',selectedWatchlistId);
     if (selectedWatchlistId !== null) {
       const response = await fetch(`/api/watchlists/${selectedWatchlistId}`, {
         method: 'POST',
@@ -68,8 +67,6 @@ export default function MovieDescription() {
       if (!response.ok) {
         throw new Error(response.statusText);
       }
-      const data = await response.json();
-      console.log(data);
       handleCloseModal();
       navigate('/watchlist');
     }
